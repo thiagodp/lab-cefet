@@ -26,6 +26,8 @@ net session >nul 2>&1 || (echo Este script deve ser executado como Administrador
 
 cd C:\dev || (mkdir C:\dev && cd dev) || exit
 
+REM ---------------------------------------------------------------------------
+
 REM Produz variável %DT% com data e hora atual:
 set DT=%date:~10,4%%date:~4,2%%date:~7,2%%time:~0,2%%time:~3,2%%time:~6,2%
 
