@@ -20,12 +20,12 @@
 - PHP
 - Composer
 - Apache
-- MariaDB - já inclui MySQL - instalados com usuário `root` e senha `root`
-- PHPMyAdmin
+- MariaDB - inclui MySQL; usuário `root` e senha `root`
+- PHPMyAdmin - em `C:\dev\apache\Apache24\htdocs\phpmyadmin`
 - NodeJS
+- PNPM
 - Bun
 - Putty
-- PNPM
 
 ## Licença
 
