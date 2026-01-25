@@ -3,7 +3,7 @@ REM ===========================================================================
 REM Script de instalação - Thiago Delgado Pinto
 REM ===========================================================================
 REM Programas incluídos:
-REM cURL, Git, PHP, MariaDB, Apache, PHPMyAdmin, Composer, NodeJS, Bun, PNPM, Putty
+REM cURL, Git, PHP, MariaDB, Apache, PHPMyAdmin, Composer, NodeJS, Bun, scrcpy, Putty, PNPM
 REM
 REM Os programas são instalados dentro do diretório "C:\dev" (ex. C:\dev\git).
 REM
@@ -122,6 +122,9 @@ cd C:\dev && winget install -e --id Oven-sh.Bun -l C:\dev\bun
 
 echo Instalando o Putty se preciso...
 (winget list -e --id PuTTY.PuTTY | findstr PuTTY.PuTTY) || winget install --id PuTTY.PuTTY -l C:\dev\putty
+
+echo Instalando o Screencopy para desenvolvimento para Android...
+winget install --exact Genymobile.scrcpy -m C:\dev\scrcpy
 
 echo Atualizando o PNPM se necessário...
 pnpm --version || npm i -g pnpm

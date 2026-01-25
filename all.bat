@@ -7,6 +7,7 @@ cd C:\dev || (mkdir C:\dev && cd dev) || exit
 call install
 
 call extra-editor
+call extra-cpp
 call extra-java
 call extra-python
 call extra-office
