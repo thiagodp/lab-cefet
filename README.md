@@ -10,7 +10,7 @@
 
 1. Baixe [lab-cefet-main.zip](https://github.com/thiagodp/lab-cefet/archive/refs/heads/main.zip).
 2. Extraia `lab-cefet-main.zip` para `C:\lab-cefet-main` (ou outra pasta qualquer).
-3. Clique com o botão direito no botão **Iniciar (logo do Windows)**, clique em **"Terminal (Administrador)"** e confirme para abrir o terminal.
+3. Com o botão direito do mouse, clique no menu **Iniciar (logo do Windows)**, clique em **"Terminal (Administrador)"** e confirme para abrir o terminal.
 4. Execute `cd C:\lab-cefet-main` e depois `dir`.
 5. Execute o `.bat` desejado. Por exemplo: `install-web.bat`.
 
@@ -30,20 +30,25 @@
 
 > Instala cada programa em `C:\dev`.
 
-- Git
 - cURL
+- Git
 - PHP
-- Composer
 - Apache
-- MariaDB - inclui MySQL; usuário `root` e senha `root`
+- Composer
 - PHPMyAdmin - em `C:\dev\apache\Apache24\htdocs\phpmyadmin`
+- MariaDB - inclui MySQL; usuário `root` e senha `root`
 - NodeJS
-- PNPM
 - Bun
 - Putty
 - Scrcpy
+- PNPM
 
-💡 Observação: Já integra o Apache ao PHP, usando [apache-php](https://github.com/thiagodp/apache-php).
+#### 💡 Observações:
+- Desinstala XAMPP, se instalado.
+- Já integra o Apache ao PHP, usando [apache-php](https://github.com/thiagodp/apache-php).
+- Instala o Apache como serviço e o inicia.
+- Instala o MariaDB como serviço e o inicia.
+- Configura a senha `root` para o usuário `root` no MariaDB.
 
 
 ### [`install-cpp.bat`](install-cpp.bat)
