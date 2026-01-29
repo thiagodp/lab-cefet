@@ -30,6 +30,7 @@ npm uninstall -g pnpm
 winget uninstall --nowarn -e --id OpenJS.NodeJS.LTS
 winget uninstall --nowarn -e --id Oven-sh.Bun
 winget uninstall --nowarn -e --id PuTTY.PuTTY
+winget uninstall --nowarn -e --id Genymobile.scrcpy
 
 
 rmdir /Q /S C:\dev\apache\htdocs\phpmyadmin
