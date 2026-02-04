@@ -11,7 +11,7 @@ REM Comentários:
 REM O comando SETX trunca em 1024 caracteres. Por isso, as variáveis de ambiente devem ser modificadas via "reg add".
 REM Como seria preciso reiniciar o terminal para as alterações terem efeito, adiciona-se o caminho no PATH temporariamente via SET. Exemplo:
 REM ---
-REM for /f "tokens=2*" %%i in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path') do reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path /t REG_EXPAND_SZ /d "%%j;C:\exemplo" /f
+REM reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH /t REG_EXPAND_SZ /d "%PATH%;C:\exemplo" /f
 REM set PATH=%PATH%;C:\exemplo
 REM ---
 REM
@@ -29,6 +29,8 @@ REM Pode ser útil em caso de erro ao tentar instalar algo como WinGet:
 REM
 REM winget settings --disable BypassCertificatePinningForMicrosoftStore
 
+REM Habilita a instalação via manifestos locais (precisa ser Administrador)
+winget settings --enable LocalManifestFiles
 
 cd C:\dev || (mkdir C:\dev && cd dev) || exit
 
@@ -40,14 +42,18 @@ REM set DT=%date:~10,4%%date:~4,2%%date:~7,2%%time:~0,2%%time:~3,2%%time:~6,2%
 REM Faz backup do registro do Windows, por segurança
 REM reg export "HKLM\SOFTWARE" "%CD%\registro_%DT%.reg" /y
 
+
 echo Instalando cURL se preciso...
 curl --version || winget install -e --id cURL.cURL -l C:\dev\curl
+
 
 echo Instalando Git se preciso...
 git --version || winget install -e --id Git.Git -l C:\dev\git && git config --global --add safe.directory *
 
+
 echo Desinstalando XAMPP se existir...
 (winget list --name XAMPP | findstr XAMPP) && echo Desinstalando XAMP... && winget uninstall --name XAMPP
+
 
 echo Instalando/atualizando o PHP...
 (winget list -e --id PHP.PHP.8.1 | findstr PHP.PHP.8.1) && winget uninstall -e --id PHP.PHP.8.1
@@ -59,13 +65,19 @@ winget install -e --id PHP.PHP.8.5 -l C:\dev\php
 REM Adiciona ao PATH temporário apenas se não existir
 ( PATH | findstr C:\dev\php ) || set PATH=%PATH%;C:\dev\php
 
+
+
 echo Instalando Apache HTTP se preciso...
-winget install -e --id ApacheLounge.httpd -l C:\dev\apache
+winget install -e --id ApacheLounge.httpd -v 2.4.65 -l C:\dev\apache --accept-package-agreements --accept-source-agreements
+
 REM Adiciona ao PATH temporário apenas se não existir
 ( PATH | findstr C:\dev\apache\Apache24\bin ) || set PATH=%PATH%;C:\dev\apache\Apache24\bin
 
+
+
 echo Integrando PHP e Apache...
-cd C:\dev && git clone https://github.com/thiagodp/apache-php && cd apache-php && php integrate.php --silent && cd .. && rmdir /Q /S apache-php
+(cd C:\dev\apache-php || (cd C:\dev && git clone https://github.com/thiagodp/apache-php && cd apache-php)) && php integrate.php --silent
+
 
 REM echo Instalando Composer se preciso...
 REM php C:\dev\composer\composer.phar --version || (mkdir C:\dev\composer || cd C:\dev\composer) && (
@@ -79,23 +91,17 @@ php C:\dev\composer\composer.phar --version || ((mkdir C:\dev\composer || cd C:\
     cd C:\dev\composer && (curl -sS https://getcomposer.org/installer | php) && php composer-setup.php --filename=composer.bat
 ))
 
-
-REM Adiciona ao PATH persistente apenas se não existir
-
-( reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path | findstr C:\dev\composer ) || (
-    setlocal enabledelayedexpansion
-    for /f "tokens=*" %%A in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path ') do (
-        for /f "tokens=3*" %%i in ("%%A") do set "currentPath=%%j"
-    )
-    if not defined currentPath set "currentPath="
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path /t REG_EXPAND_SZ /d "!currentPath!;C:\dev\composer" /f >nul
+REM Adiciona Composer ao PATH, via registro, se não existir
+( reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH | findstr C:\dev\composer ) || (
+    reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH /t REG_EXPAND_SZ /d "%PATH%;C:\dev\composer" /f
 )
-REM Adiciona ao PATH temporário apenas se não existir
+REM Adiciona Composer ao PATH temporário, se não existir
 ( PATH | findstr C:\dev\composer ) || set PATH=%PATH%;C:\dev\composer
 
 
 echo Instalando PHPMyAdmin se preciso...
 cd C:\dev\apache\Apache24\htdocs\phpmyadmin || (cd C:\dev\apache\Apache24\htdocs && php C:\dev\composer\composer.phar create-project phpmyadmin/phpmyadmin --no-dev --ignore-platform-req=ext-curl)
+
 
 echo Instalando o Apache como serviço e iniciando...
 httpd -k install && httpd -k start
@@ -103,17 +109,13 @@ httpd -k install && httpd -k start
 
 echo Instalando MariaDB se preciso...
 (winget list -e --id MariaDB.Server | findstr MariaDB.Server) || winget install --id MariaDB.Server -l C:\dev\mariadb
-REM Adiciona ao PATH persistente apenas se não existir
-( reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path | findstr C:\dev\mariadb\bin ) || (
-    setlocal enabledelayedexpansion
-    for /f "tokens=*" %%A in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path ^| findstr "    Path    REG_EXPAND_SZ"') do (
-        for /f "tokens=3*" %%i in ("%%A") do set "currentPath=%%j"
-    )
-    if not defined currentPath set "currentPath="
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path /t REG_EXPAND_SZ /d "!currentPath!;C:\dev\mariadb\bin" /f >nul
+
+REM Adiciona MariaDB ao PATH, via registro, se não existir
+( reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH | findstr C:\dev\mariadb\bin ) || (
+    reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH /t REG_EXPAND_SZ /d "%PATH%;C:\dev\mariadb\bin" /f
 )
-REM Adiciona ao PATH temporário apenas se não existir
-(PATH | findstr C:\dev\mariadb\bin) || set PATH=%PATH%;C:\dev\mariadb\bin
+REM Adiciona MariaDB ao PATH temporário, se não existir
+( PATH | findstr C:\dev\mariadb\bin ) || set PATH=%PATH%;C:\dev\mariadb\bin
 
 echo Instalando o serviço do MariaDB e iniciando...
 mysqld --install
@@ -127,18 +129,23 @@ echo Atualizando o NodeJS...
 (winget list -e --id OpenJS.NodeJS.LTS | findstr OpenJS.NodeJS.LTS) && echo Desinstalando NodeJS... && winget uninstall -e --id OpenJS.NodeJS.LTS
 cd C:\dev && ((mkdir node && cd node) || cd node) && (winget install -e --id OpenJS.NodeJS.LTS -l C:\dev\node || echo NodeJS OK)
 
+
 echo Atualizando o Bun...
 (winget list -e --id Oven-sh.Bun | findstr Oven-sh.Bun) && echo Desinstalando Bun... && winget uninstall -e --id Oven-sh.Bun
 cd C:\dev && winget install -e --id Oven-sh.Bun -l C:\dev\bun
 
+
 echo Instalando o Putty se preciso...
 (winget list -e --id PuTTY.PuTTY | findstr PuTTY.PuTTY) || winget install --id PuTTY.PuTTY -l C:\dev\putty
 
+
 echo Instalando o Screencopy para desenvolvimento para Android...
-winget install -e --id Genymobile.scrcpy -m C:\dev\scrcpy
+winget install -e --id Genymobile.scrcpy -l C:\dev\scrcpy
+
 
 echo Atualizando o PNPM se necessário...
-pnpm --version || npm i -g pnpm
+call pnpm --version || npm i -g pnpm
 
-cd C:\dev && dir
+
+dir C:\dev
 echo Pronto.
