@@ -108,7 +108,7 @@ httpd -k install && httpd -k start
 
 
 echo Instalando MariaDB se preciso...
-(winget list -e --id MariaDB.Server | findstr MariaDB.Server) || winget install --id MariaDB.Server -l C:\dev\mariadb
+(winget list -e --id MariaDB.Server | findstr MariaDB.Server) || ((rmdir /Q /S C:\dev\mariadb || echo Aguarde...) && winget install --id MariaDB.Server -l C:\dev\mariadb)
 
 REM Adiciona MariaDB ao PATH, via registro, se não existir
 ( reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH | findstr C:\dev\mariadb\bin ) || (
