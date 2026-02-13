@@ -1,4 +1,5 @@
 @echo off
+echo -- EDITOR ----------------------------------------------------------------
 
 echo Notepad++
 winget install -e --id Notepad++.Notepad++ -l C:\dev\notepad

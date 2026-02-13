@@ -1,4 +1,5 @@
 @echo off
+echo -- PYTHON ----------------------------------------------------------------
 
 echo Python
 winget install -e --id Python.Python.3.14 -l C:\dev\python

@@ -1,4 +1,5 @@
 @echo off
+echo -- CPP -------------------------------------------------------------------
 
 echo CodeBlocks com MinGW
 winget install -e --id CodeBlocks.CodeBlocks.MinGW -l C:\dev\codeblocks

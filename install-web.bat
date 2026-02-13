@@ -1,4 +1,6 @@
 @echo off
+echo -- WEB -------------------------------------------------------------------
+
 REM ===========================================================================
 REM Script de instalação - Thiago Delgado Pinto
 REM ===========================================================================
@@ -16,18 +18,19 @@ REM set PATH=%PATH%;C:\exemplo
 REM ---
 REM
 REM Observações:
-REM     - Por algum motivo os seguintes programas fazem terminar a execução do script, dando erro ou não: composer, pnpm, npm
-REM         - Para não haver problema quanto ao Composer, utilizou-se a execução via PHP;
-REM         - Para não haver problema quanto ao PNPM/NPM, eles foram colocados no fim do script.
+REM     - Alguns programas (ex. Code, Composer, PNPM e NPM) fazem terminar a execução do script, pois são
+REM       arquivos bat/cmd/ps e o controle da execução passam para os mesmos. Para solucionar, deve-se
+REM       usar "call" para invocar o respectivo programa. Ex.: call code
 REM ===========================================================================
+
 
 REM Checa se é Administrador
 net session >nul 2>&1 || (echo Este script deve ser executado como Administrador && exit 1)
 
 REM Permite instalar com WinGet programas que estejam fora da Microsoft Store
-REM Pode ser útil em caso de erro ao tentar instalar algo como WinGet:
+REM Pode ser útil em caso de erro ao tentar instalar algo com o WinGet:
 REM
-REM winget settings --disable BypassCertificatePinningForMicrosoftStore
+winget settings --disable BypassCertificatePinningForMicrosoftStore
 
 REM Habilita a instalação via manifestos locais (precisa ser Administrador)
 winget settings --enable LocalManifestFiles
@@ -144,7 +147,7 @@ winget install -e --id Genymobile.scrcpy -l C:\dev\scrcpy
 
 
 echo Atualizando o PNPM se necessário...
-call pnpm --version || npm i -g pnpm
+call pnpm --version || npm i -g pnpm || winget install -e --id=pnpm.pnpm
 
 
 dir C:\dev

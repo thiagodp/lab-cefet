@@ -1,4 +1,5 @@
 @echo off
+echo -- OPS -------------------------------------------------------------------
 
 cd C:\ops || (mkdir C:\ops && C:\ops)
 
@@ -17,6 +18,13 @@ winget install -e --id Canonical.Ubuntu -l C:\ops\ubuntu
 echo Docker Desktop
 winget install -e --id Docker.DockerDesktop -l C:\ops\docker-desktop
 
+echo Microsoft VCRedist
+winget install -e --id=Microsoft.VCRedist.2005.x64
+winget install -e --id=Microsoft.VCRedist.2008.x64
+winget install -e --id=Microsoft.VCRedist.2010.x64
+winget install -e --id=Microsoft.VCRedist.2012.x64
+winget install -e --id=Microsoft.VCRedist.2013.x64
+winget install -e --id=Microsoft.VCRedist.2015+.x64
 
 echo Desinstala o VirtualBox se existir...
 (winget list -e --id Oracle.VirtualBox | findstr Oracle.VirtualBox) && winget uninstall -e --id Oracle.VirtualBox

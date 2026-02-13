@@ -1,6 +1,6 @@
 # lab-cefet
 
-> Bash scripts para CMD (Windows) que visam instalar programas necessários ao Laboratórios do Bacharelado em Sistemas de Informação do CEFET/RJ Nova Friburgo
+> Bash scripts para CMD (Windows) que instalam programas necessários ao Laboratórios do Bacharelado em Sistemas de Informação do CEFET/RJ Nova Friburgo
 
 ## Como utilizar
 
@@ -21,6 +21,15 @@
 2. Extraia `lab-cefet-main.zip` para `C:\lab-cefet-main` (ou outra pasta qualquer).
 3. Clique com o botão direito no botão Iniciar (logo do Windows), clique em "Terminal (Administrador)" e confirme para abrir o terminal.
 4. Execute `cd C:\lab-cefet-main` e então `install`.
+
+
+### Forma 3: Instalando todos os programas - indicada para o Laboratório 🔬
+
+1. Baixe [lab-cefet-main.zip](https://github.com/thiagodp/lab-cefet/archive/refs/heads/main.zip).
+2. Extraia `lab-cefet-main.zip` para `C:\lab-cefet-main` (ou outra pasta qualquer).
+3. Clique com o botão direito no botão Iniciar (logo do Windows), clique em "Terminal (Administrador)" e confirme para abrir o terminal.
+4. Execute `cd C:\lab-cefet-main`.
+5. Execute `gen` (que irá gerar o lab.bat) e então `lab`.
 
 
 
@@ -98,6 +107,7 @@
 - Windows Terminal (WT)
 - Ubuntu (para WSL)
 - Docker Desktop
+- Microsoft VCRedist (para o Oracle Virtual Box)
 - Oracle VirtualBox
 
 

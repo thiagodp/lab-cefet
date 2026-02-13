@@ -1,4 +1,5 @@
 @echo off
+echo -- JAVA ------------------------------------------------------------------
 
 echo Instalando JDK...
 winget install -e --id Oracle.JDK.25 -l C:\dev\jdk
