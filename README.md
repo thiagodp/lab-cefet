@@ -2,6 +2,8 @@
 
 > Bash scripts para CMD (Windows) que instalam programas necessários aos Laboratórios do Bacharelado em Sistemas de Informação do CEFET/RJ Nova Friburgo
 
+👉 Criado para o Prompt de Comando (CMD). Não funciona no PowerShell.
+
 ## Como utilizar
 
 > ⚠️ Use por sua conta e risco ⚠️
@@ -10,7 +12,7 @@
 
 1. Baixe [lab-cefet-main.zip](https://github.com/thiagodp/lab-cefet/archive/refs/heads/main.zip).
 2. Extraia `lab-cefet-main.zip` para `C:\lab-cefet-main` (ou outra pasta qualquer).
-3. Com o botão direito do mouse, clique no menu **Iniciar (logo do Windows)**, clique em **"Terminal (Administrador)"** e confirme para abrir o terminal.
+3. Clique no menu **Iniciar (logo do Windows)**, digite `Prompt de Comando`, clique em **"Executar como Administrador"** e confirme para abrir o terminal.
 4. Execute `cd C:\lab-cefet-main` e depois `dir`.
 5. Execute o `.bat` desejado. Por exemplo: `install-web.bat`.
 
@@ -19,7 +21,7 @@
 
 1. Baixe [lab-cefet-main.zip](https://github.com/thiagodp/lab-cefet/archive/refs/heads/main.zip).
 2. Extraia `lab-cefet-main.zip` para `C:\lab-cefet-main` (ou outra pasta qualquer).
-3. Clique com o botão direito no botão Iniciar (logo do Windows), clique em "Terminal (Administrador)" e confirme para abrir o terminal.
+3. Clique no menu **Iniciar (logo do Windows)**, digite `Prompt de Comando`, clique em **"Executar como Administrador"** e confirme para abrir o terminal.
 4. Execute `cd C:\lab-cefet-main` e então `install`.
 
 
@@ -29,7 +31,7 @@
 
 1. Baixe [lab-cefet-main.zip](https://github.com/thiagodp/lab-cefet/archive/refs/heads/main.zip).
 2. Extraia `lab-cefet-main.zip` para `C:\lab-cefet-main` (ou outra pasta qualquer).
-3. Clique com o botão direito no botão Iniciar (logo do Windows), clique em "Terminal (Administrador)" e confirme para abrir o terminal.
+3. Clique no menu **Iniciar (logo do Windows)**, digite `Prompt de Comando`, clique em **"Executar como Administrador"** e confirme para abrir o terminal.
 4. Execute `cd C:\lab-cefet-main`.
 5. Execute `gen` (que irá gerar o lab.bat) e então `lab`.
 
@@ -124,6 +126,11 @@
 
 - Todos os programas dos `.bat` listados acima.
 
+
+## Feedback
+
+- Se foi útil pra você, considere dar uma estrela. ⭐
+- Para melhorias ou sugestões, [abra um chamado](https://github.com/thiagodp/lab-cefet/issues/new).
 
 ## Licença
 
