@@ -34,3 +34,7 @@ winget source reset --force
 
 echo Instalando Virtual Box...
 winget install -e  --id=Oracle.VirtualBox --force --accept-package-agreements --accept-source-agreements -l C:\ops\virtualbox
+
+
+REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
+(wmic useraccount get name|findstr Aluno) && icacls C:\ops /T /grant Aluno:(RX,RD,RA)

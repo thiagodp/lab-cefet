@@ -16,8 +16,19 @@ REM Adiciona a variável JAVA_HOME, via registro, se não existir
     reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v JAVA_HOME /t REG_EXPAND_SZ /d "%PATH%;C:\dev\jdk" /f
 )
 
+REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\jdk /T /grant Aluno:(RX,RD,RA)
+
+
 echo Instalando Eclipse para JEE...
 winget install -e --id EclipseFoundation.Eclipse.JEE -l C:\dev\eclipse
 
+REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\eclipse /T /grant Aluno:(RX,RD,RA)
+
+
 echo Instalando IntelliJ Community...
 winget install -e --id JetBrains.IntelliJIDEA.Community -l C:\dev\intellij
+
+REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\intellij /T /grant Aluno:(RX,RD,RA)

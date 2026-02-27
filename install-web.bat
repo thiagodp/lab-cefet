@@ -49,9 +49,15 @@ REM reg export "HKLM\SOFTWARE" "%CD%\registro_%DT%.reg" /y
 echo Instalando cURL se preciso...
 curl --version || winget install -e --id cURL.cURL -l C:\dev\curl
 
+REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\curl /T /grant Aluno:(RX,RD,RA)
+
 
 echo Instalando Git se preciso...
 git --version || winget install -e --id Git.Git -l C:\dev\git && git config --global --add safe.directory *
+
+REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\git /T /grant Aluno:(RX,RD,RA)
 
 
 echo Desinstalando XAMPP se existir...
@@ -65,13 +71,24 @@ echo Instalando/atualizando o PHP...
 (winget list -e --id PHP.PHP.8.4 | findstr PHP.PHP.8.4) && winget uninstall -e --id PHP.PHP.8.4
 
 winget install -e --id PHP.PHP.8.5 -l C:\dev\php
+
+REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\php /T /grant Aluno:(RX,RD,RA)
+
+REM Adiciona ao PATH, via registro, se não existir
+( reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH | findstr C:\dev\php ) || (
+    reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH /t REG_EXPAND_SZ /d "%PATH%;C:\dev\php" /f
+)
+
 REM Adiciona ao PATH temporário apenas se não existir
 ( PATH | findstr C:\dev\php ) || set PATH=%PATH%;C:\dev\php
 
 
-
 echo Instalando Apache HTTP se preciso...
 winget install -e --id ApacheLounge.httpd -v 2.4.65 -l C:\dev\apache --accept-package-agreements --accept-source-agreements
+
+REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\apache /T /grant Aluno:(RX,RD,RA)
 
 REM Adiciona ao PATH temporário apenas se não existir
 ( PATH | findstr C:\dev\apache\Apache24\bin ) || set PATH=%PATH%;C:\dev\apache\Apache24\bin
@@ -94,6 +111,9 @@ php C:\dev\composer\composer.phar --version || ((mkdir C:\dev\composer || cd C:\
     cd C:\dev\composer && (curl -sS https://getcomposer.org/installer | php) && php composer-setup.php --filename=composer.bat
 ))
 
+REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\composer /T /grant Aluno:(RX,RD,RA)
+
 REM Adiciona Composer ao PATH, via registro, se não existir
 ( reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH | findstr C:\dev\composer ) || (
     reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH /t REG_EXPAND_SZ /d "%PATH%;C:\dev\composer" /f
@@ -112,6 +132,9 @@ httpd -k install && httpd -k start
 
 echo Instalando MariaDB se preciso...
 (winget list -e --id MariaDB.Server | findstr MariaDB.Server) || ((rmdir /Q /S C:\dev\mariadb || echo Aguarde...) && winget install --id MariaDB.Server -l C:\dev\mariadb)
+
+REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\mariadb /T /grant Aluno:(RX,RD,RA)
 
 REM Adiciona MariaDB ao PATH, via registro, se não existir
 ( reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH | findstr C:\dev\mariadb\bin ) || (
@@ -132,22 +155,37 @@ echo Atualizando o NodeJS...
 (winget list -e --id OpenJS.NodeJS.LTS | findstr OpenJS.NodeJS.LTS) && echo Desinstalando NodeJS... && winget uninstall -e --id OpenJS.NodeJS.LTS
 cd C:\dev && ((mkdir node && cd node) || cd node) && (winget install -e --id OpenJS.NodeJS.LTS -l C:\dev\node || echo NodeJS OK)
 
+REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\node /T /grant Aluno:(RX,RD,RA)
+
 
 echo Atualizando o Bun...
 (winget list -e --id Oven-sh.Bun | findstr Oven-sh.Bun) && echo Desinstalando Bun... && winget uninstall -e --id Oven-sh.Bun
 cd C:\dev && winget install -e --id Oven-sh.Bun -l C:\dev\bun
 
+REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\bun /T /grant Aluno:(RX,RD,RA)
+
 
 echo Instalando o Putty se preciso...
 (winget list -e --id PuTTY.PuTTY | findstr PuTTY.PuTTY) || winget install --id PuTTY.PuTTY -l C:\dev\putty
+
+REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\putty /T /grant Aluno:(RX,RD,RA)
 
 
 echo Instalando o Screencopy para desenvolvimento para Android...
 winget install -e --id Genymobile.scrcpy -l C:\dev\scrcpy
 
+REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\scrcpy /T /grant Aluno:(RX,RD,RA)
+
 
 echo Atualizando o PNPM se necessário...
-call pnpm --version || npm i -g pnpm || winget install -e --id=pnpm.pnpm
+call pnpm --version || npm i -g pnpm || winget install -e --id=pnpm.pnpm -l C:\dev\pnpm
+
+REM Se o diretório pnpm e o usuário Aluno existirem, concede acesso RX ao usuário Aluno...
+cd C:\dev\pnpm && (wmic useraccount get name|findstr Aluno) && icacls C:\dev\pnpm /T /grant Aluno:(RX,RD,RA)
 
 
 dir C:\dev
