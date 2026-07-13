@@ -1,10 +1,10 @@
+
 @echo off
 echo -- EDITOR ----------------------------------------------------------------
 
 echo Notepad++
 winget install -e --id Notepad++.Notepad++ -l C:\dev\notepad
-
-REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
+REM Ajusta acesso
 (wmic useraccount get name|findstr Aluno) && icacls C:\dev\notepad /T /grant Aluno:(RX,RD,RA)
 
 
@@ -24,5 +24,5 @@ for %%E in (
     call code --install-extension %%E
 )
 
-REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
-(wmic useraccount get name|findstr Aluno) && icacls C:\dev\vscode /T /grant Aluno:(RX,RD,RA)
+REM Ajusta permissão
+(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\vscode" /grant Aluno:(OI)(CI)M /T && icacls "C:\dev\vscode" /deny Aluno:(OI)(CI)(DE,DC) /T

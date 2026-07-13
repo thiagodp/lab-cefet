@@ -10,7 +10,7 @@ REM ---------------------------------------------------------------------------
 echo Desinstalando - por favor, aguarde...
 winget uninstall --nowarn -e --id cURL.cURL
 winget uninstall --nowarn -e --id Git.Git
-winget uninstall --name XAMPP
+winget uninstall --nowarn --name XAMPP
 winget uninstall --nowarn -e --id PHP.PHP.8.1
 winget uninstall --nowarn -e --id PHP.PHP.8.2
 winget uninstall --nowarn -e --id PHP.PHP.8.3

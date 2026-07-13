@@ -36,6 +36,15 @@
 5. Execute `gen` (que irá gerar o lab.bat) e então `lab`.
 
 
+## Estrutura de diretórios
+
+```
+C:\
+  |- dev\             <-- Diretório criado para programas para desenvolvimento
+  |- ops\             <-- Diretório criado para programas de infraestrutura
+  +- Program Files\   <-- Diretório utilizado para programas de escritório e outros
+```
+
 ## Programas instalados por cada arquivo .bat
 
 ### [`install-web.bat`](install-web.bat)
@@ -120,6 +129,13 @@
 
 - Python
 - Anaconda
+
+
+### [`install-other.bat`](install-other.bat)
+
+> Instala cada programa em `C:\dev`.
+
+- MySQL Workbench
 
 
 ### [`install.bat`](install.bat)

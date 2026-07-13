@@ -1,3 +1,4 @@
+
 @echo off
 echo -- INSTALL ---------------------------------------------------------------
 
@@ -6,6 +7,7 @@ net session >nul 2>&1 || (echo Este script deve ser executado como Administrador
 cd C:\dev || (mkdir C:\dev && cd dev) || exit
 
 for %%E in (
+    install-config
     install-editor
     install-cpp
     install-java
@@ -13,6 +15,7 @@ for %%E in (
     install-office
     install-ops
     install-web
+    install-other
 ) do (
     call %%E
 )

@@ -1,8 +1,11 @@
+
 @echo off
 echo -- JAVA ------------------------------------------------------------------
 
+REM JDK
+
 echo Instalando JDK...
-winget install -e --silent --id Oracle.JDK.25 -l C:\dev\jdk
+winget install -e --id Oracle.JDK.25 -l C:\dev\jdk
 
 REM Adiciona o JDK ao PATH, via registro, se não existir
 ( reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH | findstr C:\dev\jdk\bin ) || (
@@ -20,12 +23,16 @@ REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
 (wmic useraccount get name|findstr Aluno) && icacls C:\dev\jdk /T /grant Aluno:(RX,RD,RA)
 
 
+REM Eclipse
+
 echo Instalando Eclipse para JEE...
 winget install -e --id EclipseFoundation.Eclipse.JEE -l C:\dev\eclipse
 
 REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
 (wmic useraccount get name|findstr Aluno) && icacls C:\dev\eclipse /T /grant Aluno:(RX,RD,RA)
 
+
+REM IntelliJ
 
 echo Instalando IntelliJ Community...
 winget install -e --id JetBrains.IntelliJIDEA.Community -l C:\dev\intellij

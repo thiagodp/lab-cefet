@@ -2,3 +2,5 @@ test.bat
 a.bat
 b.bat
 lab.bat
+*.exe
+*.zip

@@ -1,3 +1,4 @@
+
 @echo off
 echo -- OPS -------------------------------------------------------------------
 
@@ -36,5 +37,5 @@ echo Instalando Virtual Box...
 winget install -e  --id=Oracle.VirtualBox --force --accept-package-agreements --accept-source-agreements -l C:\ops\virtualbox
 
 
-REM Concede acesso RX ao usuário Aluno, se esse usuário existir...
-(wmic useraccount get name|findstr Aluno) && icacls C:\ops /T /grant Aluno:(RX,RD,RA)
+REM Ajusta permissão
+(wmic useraccount get name|findstr Aluno) && icacls "C:\ops" /grant Aluno:(OI)(CI)M /T && icacls "C:\ops" /deny Aluno:(OI)(CI)(DE,DC) /T
