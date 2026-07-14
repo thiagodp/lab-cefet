@@ -1,3 +1,4 @@
+
 REM ===========================================================================
 REM Script de instalação - Thiago Delgado Pinto
 REM ===========================================================================
@@ -53,10 +54,13 @@ REM reg export "HKLM\SOFTWARE" "%CD%\registro_%DT%.reg" /y
 REM ---------------------------------------------------------------------------
 REM Desinstala programas que não devem estar instalados
 
-(winget list -e --id ApacheFriends.Xampp.8.1 | findstr ApacheFriends.Xampp.8.1) && winget uninstall -e --id ApacheFriends.Xampp.8.1 --silent
-(winget list -e --id ApacheFriends.Xampp.8.2 | findstr ApacheFriends.Xampp.8.2) && winget uninstall -e --id ApacheFriends.Xampp.8.2 --silent
+REM (winget list -e --id ApacheFriends.Xampp.8.1 | findstr ApacheFriends.Xampp.8.1) && winget uninstall -e --id ApacheFriends.Xampp.8.1 --silent
+REM (winget list -e --id ApacheFriends.Xampp.8.2 | findstr ApacheFriends.Xampp.8.2) && winget uninstall -e --id ApacheFriends.Xampp.8.2 --silent
+REM Basta um comando de desinstalação do XAMPP. Infelizmente ele pede confirmação, mesmo com --silent.
 (winget list --name XAMPP | findstr XAMPP) && winget uninstall --name XAMPP  --silent
+
 (winget list -e --id Wampserver.Wampserver | findstr Wampserver.Wampserver) && winget uninstall -e --id Wampserver.Wampserver  --silent
+
 (winget list -e --id PHP.PHP.8.1 | findstr PHP.PHP.8.1) && winget uninstall -e --id PHP.PHP.8.1 --silent
 (winget list -e --id PHP.PHP.8.2 | findstr PHP.PHP.8.2) && winget uninstall -e --id PHP.PHP.8.2 --silent
 (winget list -e --id PHP.PHP.8.3 | findstr PHP.PHP.8.3) && winget uninstall -e --id PHP.PHP.8.3 --silent
@@ -223,3 +227,4 @@ call git --version
 call curl --version
 call start chrome http://localhost
 call start chrome http://localhost/phpmyadmin
+

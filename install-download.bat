@@ -1,3 +1,4 @@
+
 REM ------------------------------------------------------------------------------------------------
 REM Baixa alguns programas para instalação:
 REM - Portugol 2.27.5     : baixa e inicia o instalador

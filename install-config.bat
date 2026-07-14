@@ -1,3 +1,4 @@
+
 REM Configuração básica para instalação de outros programas
 REM -------------------------------------------------------
 
