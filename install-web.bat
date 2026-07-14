@@ -69,7 +69,7 @@ REM cURL
 echo Instalando cURL se preciso...
 curl --version || winget install -e --id cURL.cURL -l C:\dev\curl
 REM Ajusta acesso
-(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\curl" /T /grant Aluno:(RX,RD,RA)
+(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\curl" /T /grant Aluno:(RX,RD,RA) >>saida.txt
 
 
 REM Git
@@ -77,7 +77,7 @@ REM Git
 echo Instalando Git se preciso...
 git --version || winget install -e --id Git.Git -l C:\dev\git && git config --global --add safe.directory *
 REM Ajusta acesso
-(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\git" /grant Aluno:(OI)(CI)M /T && icacls "C:\dev\git" /deny Aluno:(OI)(CI)(DE,DC) /T
+(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\git" /grant Aluno:(OI)(CI)M /T >>saida.txt && icacls "C:\dev\git" /deny Aluno:(OI)(CI)(DE,DC) /T >>saida.txt
 
 
 REM PHP
@@ -85,7 +85,7 @@ REM PHP
 echo Instalando/atualizando o PHP...
 winget install -e --id PHP.PHP.8.5 -l C:\dev\php
 REM Ajusta acesso
-(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\php" /grant Aluno:(OI)(CI)M /T && icacls "C:\dev\php" /deny Aluno:(OI)(CI)(DE,DC) /T
+(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\php" /grant Aluno:(OI)(CI)M /T >>saida.txt && icacls "C:\dev\php" /deny Aluno:(OI)(CI)(DE,DC) /T >>saida.txt
 REM Adiciona ao PATH, via registro, se não existir
 ( reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH | findstr C:\dev\php ) || (
     reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH /t REG_EXPAND_SZ /d "%PATH%;C:\dev\php" /f
@@ -99,7 +99,7 @@ REM Apache (sem serviço)
 echo Instalando Apache HTTP se preciso...
 winget install -e --id ApacheLounge.httpd -v 2.4.65 -l C:\dev\apache --accept-package-agreements --accept-source-agreements
 REM Ajusta acesso
-(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\apache" /grant Aluno:(OI)(CI)M /T && icacls "C:\dev\apache" /deny Aluno:(OI)(CI)(DE,DC) /T
+(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\apache" /grant Aluno:(OI)(CI)M /T >>saida.txt && icacls "C:\dev\apache" /deny Aluno:(OI)(CI)(DE,DC) /T >>saida.txt
 REM Adiciona ao PATH temporário apenas se não existir
 ( PATH | findstr C:\dev\apache\Apache24\bin ) || set PATH=%PATH%;C:\dev\apache\Apache24\bin
 
@@ -109,7 +109,7 @@ REM Integração de Apache com PHP
 echo Integrando PHP e Apache...
 (cd C:\dev\apache-php || (cd C:\dev && git clone https://github.com/thiagodp/apache-php && cd apache-php)) && php integrate.php --silent
 REM Ajusta acesso - RX
-(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\apache-php" /T /grant Aluno:(RX,RD,RA)
+(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\apache-php" /T /grant Aluno:(RX,RD,RA) >>saida.txt
 
 
 REM echo Instalando Composer se preciso...
@@ -127,7 +127,7 @@ php C:\dev\composer\composer.phar --version || ((mkdir C:\dev\composer || cd C:\
     cd C:\dev\composer && (curl -sS https://getcomposer.org/installer | php) && php composer-setup.php --filename=composer.bat
 ))
 REM Ajusta acesso
-(wmic useraccount get name|findstr Aluno) && icacls C:\dev\composer /T /grant Aluno:(RX,RD,RA)
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\composer /T /grant Aluno:(RX,RD,RA) >>saida.txt
 REM Adiciona Composer ao PATH, via registro, se não existir
 ( reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH | findstr C:\dev\composer ) || (
     reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH /t REG_EXPAND_SZ /d "%PATH%;C:\dev\composer" /f
@@ -153,7 +153,7 @@ REM MariaDB (inclui MySQL)
 echo Instalando MariaDB se preciso...
 (winget list -e --id MariaDB.Server | findstr MariaDB.Server) || ((rmdir /Q /S C:\dev\mariadb || echo Aguarde...) && winget install --id MariaDB.Server -l C:\dev\mariadb)
 REM Ajusta acesso
-(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\mariadb" /grant Aluno:(OI)(CI)M /T && icacls "C:\dev\mariadb" /deny Aluno:(OI)(CI)(DE,DC) /T
+(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\mariadb" /grant Aluno:(OI)(CI)M /T  >>saida.txt && icacls "C:\dev\mariadb" /deny Aluno:(OI)(CI)(DE,DC) /T >>saida.txt
 REM Adiciona MariaDB ao PATH, via registro, se não existir
 ( reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH | findstr C:\dev\mariadb\bin ) || (
     reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH /t REG_EXPAND_SZ /d "%PATH%;C:\dev\mariadb\bin" /f
@@ -175,7 +175,7 @@ echo Atualizando o NodeJS...
 (winget list -e --id OpenJS.NodeJS.LTS | findstr OpenJS.NodeJS.LTS) && echo Desinstalando NodeJS... && winget uninstall -e --id OpenJS.NodeJS.LTS
 cd C:\dev && winget install -e --id OpenJS.NodeJS.LTS -l C:\dev\node
 REM Ajusta acesso
-(wmic useraccount get name|findstr Aluno) && icacls C:\dev\node /T /grant Aluno:(RX,RD,RA)
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\node /T /grant Aluno:(RX,RD,RA) >>saida.txt
 
 
 REM Bun
@@ -192,7 +192,7 @@ REM Putty
 echo Instalando o Putty se preciso...
 (winget list -e --id PuTTY.PuTTY | findstr PuTTY.PuTTY) || winget install --id PuTTY.PuTTY -l C:\dev\putty
 REM Ajusta acesso
-(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\putty" /grant Aluno:(OI)(CI)M /T && icacls "C:\dev\putty" /deny Aluno:(OI)(CI)(DE,DC) /T
+(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\putty" /grant Aluno:(OI)(CI)M /T >>saida.txt && icacls "C:\dev\putty" /deny Aluno:(OI)(CI)(DE,DC) /T >>saida.txt
 
 
 REM Screencopy
@@ -200,7 +200,7 @@ REM Screencopy
 echo Instalando o Screencopy para desenvolvimento para Android...
 winget install -e --id Genymobile.scrcpy -l C:\dev\scrcpy
 REM Ajusta acesso
-(wmic useraccount get name|findstr Aluno) && icacls C:\dev\scrcpy /T /grant Aluno:(RX,RD,RA)
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\scrcpy /T /grant Aluno:(RX,RD,RA) >>saida.txt
 
 
 REM PNPM
@@ -208,7 +208,7 @@ REM PNPM
 echo Atualizando o PNPM se necessário...
 call pnpm --version || npm i -g pnpm || winget install -e --id=pnpm.pnpm -l C:\dev\pnpm
 REM Ajusta acesso
-(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\pnpm" /grant Aluno:(OI)(CI)M /T && icacls "C:\dev\pnpm" /deny Aluno:(OI)(CI)(DE,DC) /T
+(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\pnpm" /grant Aluno:(OI)(CI)M /T >>saida.txt && icacls "C:\dev\pnpm" /deny Aluno:(OI)(CI)(DE,DC) /T >>saida.txt
 
 
 dir C:\dev

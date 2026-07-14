@@ -4,3 +4,5 @@ b.bat
 lab.bat
 *.exe
 *.zip
+saida.txt
+tmp/

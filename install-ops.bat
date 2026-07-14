@@ -39,4 +39,4 @@ winget install -e  --id=Oracle.VirtualBox --force --accept-package-agreements --
 
 
 REM Ajusta permissão
-(wmic useraccount get name|findstr Aluno) && icacls "C:\ops" /grant Aluno:(OI)(CI)M /T && icacls "C:\ops" /deny Aluno:(OI)(CI)(DE,DC) /T
+(wmic useraccount get name|findstr Aluno) && icacls "C:\ops" /grant Aluno:(OI)(CI)M /T >>saida.txt && icacls "C:\ops" /deny Aluno:(OI)(CI)(DE,DC) /T >>saida.txt

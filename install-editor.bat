@@ -5,7 +5,7 @@ echo -- EDITOR ----------------------------------------------------------------
 echo Notepad++
 winget install -e --id Notepad++.Notepad++ -l C:\dev\notepad
 REM Ajusta acesso
-(wmic useraccount get name|findstr Aluno) && icacls C:\dev\notepad /T /grant Aluno:(RX,RD,RA)
+(wmic useraccount get name|findstr Aluno) && icacls C:\dev\notepad /T /grant Aluno:(RX,RD,RA) >>saida.txt
 
 
 echo VSCode
@@ -25,4 +25,4 @@ for %%E in (
 )
 
 REM Ajusta permissão
-(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\vscode" /grant Aluno:(OI)(CI)M /T && icacls "C:\dev\vscode" /deny Aluno:(OI)(CI)(DE,DC) /T
+(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\vscode" /grant Aluno:(OI)(CI)M /T >>saida.txt && icacls "C:\dev\vscode" /deny Aluno:(OI)(CI)(DE,DC) /T >>saida.txt
