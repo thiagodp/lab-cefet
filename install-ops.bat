@@ -28,7 +28,7 @@ winget install -e --id=Microsoft.VCRedist.2013.x64
 winget install -e --id=Microsoft.VCRedist.2015+.x64
 
 echo Desinstala o VirtualBox se existir...
-(winget list -e --id Oracle.VirtualBox | findstr Oracle.VirtualBox) && winget uninstall -e --id Oracle.VirtualBox
+(winget list -e --id Oracle.VirtualBox | findstr Oracle.VirtualBox) && winget uninstall -e --id Oracle.VirtualBox --silent
 
 echo Limpa o cache do Winget para instalar o VirtualBox
 winget source reset --force
