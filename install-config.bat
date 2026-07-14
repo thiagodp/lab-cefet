@@ -13,3 +13,6 @@ winget settings --disable BypassCertificatePinningForMicrosoftStore
 
 REM Habilita a instalação via manifestos locais (precisa ser Administrador)
 winget settings --enable LocalManifestFiles
+
+REM Habilita o WMIC
+dism /Online /Add-Capability /CapabilityName:wmic
