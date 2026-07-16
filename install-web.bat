@@ -164,6 +164,8 @@ REM Adiciona MariaDB ao PATH, via registro, se não existir
 )
 REM Adiciona MariaDB ao PATH temporário, se não existir
 ( PATH | findstr C:\dev\mariadb\bin ) || set PATH=%PATH%;C:\dev\mariadb\bin
+REM Desinstala o serviço do MariaDB/MySQL se existir
+( sc query | find /i "mysql" ) && sc stop MySQL && mysqld --remove
 REM Instala serviço e inicia MariaDB/MySQL
 echo Instalando o serviço do MariaDB e iniciando...
 mysqld --install
