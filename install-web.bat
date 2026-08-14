@@ -102,8 +102,10 @@ REM Apache (sem serviço)
 
 echo Instalando Apache HTTP se preciso...
 winget install -e --id ApacheLounge.httpd -v 2.4.65 -l C:\dev\apache --accept-package-agreements --accept-source-agreements
-REM Ajusta acesso
+REM Ajusta acesso à pasta apache
 (wmic useraccount get name|findstr Aluno) && icacls "C:\dev\apache" /grant Aluno:(OI)(CI)M /T >>saida.txt && icacls "C:\dev\apache" /deny Aluno:(OI)(CI)(DE,DC) /T >>saida.txt
+REM Ajusta acesso à pasta apache\Apache24\htdocs - para poder fazer tudo dentro dela, mas não excluí-la
+(wmic useraccount get name|findstr Aluno) && icacls "C:\dev\apache\Apache24\htdocs" /grant:r "Aluno:(OI)(CI)(IO)(M)" >>saida.txt
 REM Adiciona ao PATH temporário apenas se não existir
 ( PATH | findstr C:\dev\apache\Apache24\bin ) || set PATH=%PATH%;C:\dev\apache\Apache24\bin
 
