@@ -101,7 +101,7 @@ REM Adiciona ao PATH temporário apenas se não existir
 REM Apache (sem serviço)
 
 echo Instalando Apache HTTP se preciso...
-winget install -e --id ApacheLounge.httpd -v 2.4.65 -l C:\dev\apache --accept-package-agreements --accept-source-agreements
+winget install -e --id ApacheLounge.httpd -v 2.4.66 -l C:\dev\apache --accept-package-agreements --accept-source-agreements
 REM Ajusta acesso à pasta apache
 (wmic useraccount get name|findstr Aluno) && icacls "C:\dev\apache" /grant Aluno:(OI)(CI)M /T >>saida.txt && icacls "C:\dev\apache" /deny Aluno:(OI)(CI)(DE,DC) /T >>saida.txt
 REM Ajusta acesso à pasta apache\Apache24\htdocs - para poder fazer tudo dentro dela, mas não excluí-la
