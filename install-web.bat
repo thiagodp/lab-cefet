@@ -128,10 +128,10 @@ REM cd C:\dev\composer && echo @php "C:\dev\composer\composer.phar" %%*>composer
 
 REM Composer
 
-echo Instalando Composer se preciso...
-php C:\dev\composer\composer.phar --version || ((mkdir C:\dev\composer || cd C:\dev\composer) && (
-    cd C:\dev\composer && (curl -sS https://getcomposer.org/installer | php) && php composer-setup.php --filename=composer.bat
-))
+echo Instalando/atualizando o Composer...
+ (cd C:\dev\composer || (mkdir C:\dev\composer && cd C:\dev\composer)) && (
+     (curl -sS https://getcomposer.org/installer | php) && echo @php "C:\dev\composer\composer.phar" %%*>composer.bat
+)
 REM Ajusta acesso
 (wmic useraccount get name|findstr Aluno) && icacls C:\dev\composer /T /grant Aluno:(RX,RD,RA) >>saida.txt
 REM Adiciona Composer ao PATH, via registro, se não existir
