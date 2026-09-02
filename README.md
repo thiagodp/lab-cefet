@@ -2,11 +2,13 @@
 
 > Bash scripts para CMD (Windows) que instalam programas necessários aos Laboratórios do Bacharelado em Sistemas de Informação do CEFET/RJ Nova Friburgo
 
-👉 Criado para o Prompt de Comando (CMD). Não funciona no PowerShell.
+👉 Criado para o Prompt de Comando (CMD). ⚠️ Não funciona no PowerShell. ⚠️
 
 ## Como utilizar
 
-> ⚠️ Use por sua conta e risco ⚠️
+Há 3 formas de utilizar os scripts. Veja abaixo.
+
+> Use por sua conta e risco
 
 ### Forma 1: Instalando seletivamente
 
@@ -37,6 +39,8 @@
 
 
 ## Estrutura de diretórios
+
+Dependendo de cada arquivo de script, os seguintes diretórios são utilizados:
 
 ```
 C:\
